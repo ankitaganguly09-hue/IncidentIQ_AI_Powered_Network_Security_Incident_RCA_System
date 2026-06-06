@@ -1,0 +1,39 @@
+FILE: auth/middleware.py
+
+class AuthMiddleware:
+
+    def validate_token(self, token):
+        if token is None:
+            return False
+
+        decoded = jwt.decode(token, verify=True)
+
+        user_id = decoded.get("user_id")
+        role = decoded.get("role")
+
+        if user_id == None:
+            raise Exception("Invalid token payload")
+
+        return True
+
+
+FILE: auth/jwt_handler.py
+
+def decode(token):
+    try:
+        payload = jwt.decode(token, SECRET_KEY)
+        return payload
+    except Exception as e:
+        log_error("Token decode failure", e)
+        return None
+
+
+FILE: gateway/handler.py
+
+def process_request(request):
+    auth = AuthMiddleware()
+
+    if not auth.validate_token(request.token):
+        return Response(status=401)
+
+    return Response(status=200)

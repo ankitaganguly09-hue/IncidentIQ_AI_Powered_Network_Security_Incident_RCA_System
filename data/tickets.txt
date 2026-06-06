@@ -1,0 +1,27 @@
+INCIDENT ID: INC-401-AUTH-8832
+
+TITLE:
+High rate of authentication failures after deployment v2.3
+
+DESCRIPTION:
+After the latest deployment of authentication service (v2.3), users are experiencing intermittent login failures.
+Approximately 60-80% of login requests are failing with 401 Unauthorized errors.
+
+IMPACT:
+- Users unable to access dashboard
+- API authentication failing for mobile clients
+- Increase in support tickets
+
+OBSERVED BEHAVIOR:
+- Spike in invalid token errors
+- Authentication middleware throwing null pointer exceptions
+- Issue started immediately after deployment
+
+EXPECTED BEHAVIOR:
+Users should be authenticated successfully using valid JWT tokens.
+
+PRIORITY:
+P0 - Critical Production Outage
+
+ENVIRONMENT:
+Production - US-East cluster
